@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import AuthRouter from "../routes/AuthRouter"
+import bodyparser from "body-parser";
 
 const app = express();
 dotenv.config();
@@ -20,5 +22,10 @@ mongoose.connect(
   },
   () => console.log("Connected to database")
 );
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(bodyparser.json());
+app.use("/api/auth", AuthRouter);
 
 app.listen(3000, () => console.log("SERVER IS UP AND RUNNING"));
